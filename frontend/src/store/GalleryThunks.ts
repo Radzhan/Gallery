@@ -7,3 +7,7 @@ export const getAllPhoto = createAsyncThunk<Photo[]>('gallery/GetAll', async () 
 
 	return response.data;
 });
+
+export const DeleteOne = createAsyncThunk<void, string>('gallery/delete', async (arg) => {
+	await axiosApi.delete('photos/' + arg);
+});

@@ -1,24 +1,22 @@
 import * as express from "express";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
-import auth, {RequestWithUser} from "../middleware/auth";
+import auth from "../middleware/auth";
 import permit from "../middleware/permit";
 import Photo from '../model/Photo';
 
 const PhotoRouter = express.Router();
 
-PhotoRouter.get("/", auth, async (req, res, next) => {
+PhotoRouter.get("/", async (req, res, next) => {
 	try {
 		const QueryParametr = req.query.cameramen as string;
-
-		const object = (req as RequestWithUser).user;
 
 		if (QueryParametr === undefined) {
 				const result = await Photo.find();
 
 				return res.send(result);
 		} else {
-			const result = await Photo.find({user: object._id});
+			const result = await Photo.find({user: QueryParametr});
 
 			return res.send(result);
 		}
