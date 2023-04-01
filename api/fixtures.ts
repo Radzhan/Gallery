@@ -15,14 +15,14 @@ const run = async () => {
 		console.log("Collections were not present, skipping drop...");
 	}
 
-	const [user1, user2] = await User.create(
+	const [user1, user2, user3] = await User.create(
 		{
 			username: 'Sasha',
 			password: '12345',
 			role: 'user',
 			token: crypto.randomUUID(),
 			displayName: 'Sany',
-			avatar: 'fixtures/user1.png'
+			avatar: 'fixtures/user1.jpeg'
 		},
 		{
 			username: 'Bermet',
@@ -30,7 +30,15 @@ const run = async () => {
 			role: 'admin',
 			token: crypto.randomUUID(),
 			displayName: 'Beka',
-			avatar: 'fixtures/user2.jpeg'
+			avatar: 'fixtures/user2.png'
+		},
+		{
+			username: 'Jon doe',
+			password: '123',
+			role: 'user',
+			token: crypto.randomUUID(),
+			displayName: 'John',
+			avatar: 'fixtures/user2.png'
 		}
 	)
 
@@ -51,6 +59,37 @@ const run = async () => {
 			user: user2._id,
 			image: "fixtures/img3.jpeg",
 			title: 'some title 3',
+			author: user2.displayName,
+		},
+
+		{
+			user: user3._id,
+			image: "fixtures/img1.jpeg",
+			title: 'some title 4',
+			author: user3.displayName,
+		},
+		{
+			user: user3._id,
+			image: "fixtures/img2.jpeg",
+			title: 'some title 5',
+			author: user3.displayName,
+		},
+		{
+			user: user2._id,
+			image: "fixtures/img3.jpeg",
+			title: 'some title 6',
+			author: user2.displayName,
+		},
+		{
+			user: user3._id,
+			image: "fixtures/img2.jpeg",
+			title: 'some title 7',
+			author: user3.displayName,
+		},
+		{
+			user: user2._id,
+			image: "fixtures/img3.jpeg",
+			title: 'some title 8',
 			author: user2.displayName,
 		},
 	);

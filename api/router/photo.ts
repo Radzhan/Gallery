@@ -2,7 +2,6 @@ import * as express from "express";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import auth from "../middleware/auth";
-import permit from "../middleware/permit";
 import Photo from '../model/Photo';
 
 const PhotoRouter = express.Router();
@@ -46,7 +45,7 @@ PhotoRouter.post("/", auth, imagesUpload.single("image"), async (req, res, next)
 	}
 });
 
-PhotoRouter.delete("/:id", auth, permit('admin'), async (req, res) => {
+PhotoRouter.delete("/:id", auth, async (req, res) => {
 	try {
 		const request = await Photo.findById({_id: req.params.id});
 

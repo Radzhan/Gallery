@@ -4,17 +4,23 @@ import {Box, Button, Card, CardActions, CardMedia, Modal} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {selectUser} from '../../features/user/userSlice';
 import {DeleteOne, getAllPhoto} from '../../store/GalleryThunks';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
 
 interface Props {
 	author: string;
 	title: string;
 	image: string;
-	id: string;
+	currentId: string;
+	user_id?: string;
 }
 
-const CardPhoto: React.FC<Props> = ({id, author, title, image}) => {
-	const cardImage = apiURL + '/' + image;
+const CardPhoto: React.FC<Props> = ({currentId, author, title, image, user_id}) => {
+	 let cardImage = '';
+
+	if (image) {
+		cardImage = apiURL + '/' + image;
+	}
+	const {id} = useParams();
 	const user = useAppSelector(selectUser);
 	const navigate = useNavigate();
 	const dispatch = useAppDispatch();
@@ -28,10 +34,11 @@ const CardPhoto: React.FC<Props> = ({id, author, title, image}) => {
 		setOpen(false);
 	};
 
-	const deleteOne = async (id: string) => {
-		await dispatch(DeleteOne(id))
+	const deleteOne = async () => {
+		await dispatch(DeleteOne(currentId));
 		await dispatch(getAllPhoto());
 	}
+
 	return <div>
 		<Card sx={{maxWidth: 345, my: 3}}>
 			<CardMedia
@@ -42,9 +49,11 @@ const CardPhoto: React.FC<Props> = ({id, author, title, image}) => {
 			/>
 			<CardActions>
 				<Button onClick={handleOpen}>{title}</Button>
-				<Button size="small" onClick={() => navigate('/author/' + id)}>{author}</Button>
-				{user?.role === 'admin' ?
-					<Button size="small" onClick={() => deleteOne(id)}>Delete</Button> : null
+				{user_id ?
+					<Button size="small" onClick={() => navigate('/' + author + '/' + user_id)}>{author}</Button> : null
+				}
+				{user?.role === 'admin' || id === user?._id ?
+					<Button size="small" onClick={deleteOne}>Delete</Button> : null
 				}
 			</CardActions>
 		</Card>

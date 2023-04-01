@@ -17,10 +17,12 @@ const Main = () => {
 	}, [requestArtist]);
 
 	const createCard = arrayWithPhoto.map((element) => {
-		return <CardPhoto key={element._id} id={element._id} author={element.author} title={element.title} image={element.image}/>
+		return <CardPhoto user_id={element.user} key={element._id} currentId={element._id} author={element.author} title={element.title} image={element.image}/>
 	});
 
-	return <div>{createCard}</div>;
+	return <div>
+		{ arrayWithPhoto.length !== 0 ? createCard : <h2>Sorry no photo !</h2>}
+	</div>;
 };
 
 export default Main;

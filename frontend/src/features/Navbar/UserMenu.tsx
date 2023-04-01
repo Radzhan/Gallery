@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import {Avatar, Button, Menu, MenuItem} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { User } from "../../types";
-import {useAppDispatch} from "../../app/hooks";
+import {useAppDispatch, useAppSelector} from "../../app/hooks";
 import {logout} from "../user/userThunks";
 import {apiURL} from "../../constants";
+import {selectUser} from '../user/userSlice';
 
 interface Props {
 	user: User;
@@ -13,7 +14,7 @@ interface Props {
 const UserMenu: React.FC<Props> = ({ user }) => {
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
-
+	const userPhoto = useAppSelector(selectUser);
 	const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
 	const handleClick = (event: React.MouseEvent<HTMLElement>) => {
 		setAnchorEl(event.currentTarget);
@@ -36,8 +37,8 @@ const UserMenu: React.FC<Props> = ({ user }) => {
 		cardImage = apiURL + '/' + user.avatar;
 	}
 
-	const myCocteil = (arg: string) => {
-		navigate('/' + arg)
+	const myPhoto = () => {
+		navigate('/' + userPhoto?.displayName + '/' +  userPhoto?._id)
 	}
 
 	return (
@@ -52,8 +53,7 @@ const UserMenu: React.FC<Props> = ({ user }) => {
 				onClose={handleClose}
 			>
 				<MenuItem onClick={handleLogout}> Logout </MenuItem>
-				<MenuItem onClick={() => myCocteil('coctails')}> My Cocteil </MenuItem>
-				<MenuItem onClick={() => myCocteil('addNew')}> Add new Cocktail </MenuItem>
+				<MenuItem onClick={myPhoto}> My photo </MenuItem>
 			</Menu>
 		</>
 	);
