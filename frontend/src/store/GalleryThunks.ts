@@ -1,6 +1,6 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axiosApi from '../axiosApi';
-import {Photo} from '../types';
+import {Photo, PhotoMutation} from '../types';
 
 export const getAllPhoto = createAsyncThunk<Photo[]>('gallery/GetAll', async () => {
 	const response = await axiosApi.get('photos');
@@ -12,6 +12,10 @@ export const getAllPhotoAuthor = createAsyncThunk<Photo[], string>('gallery/GetA
 	const response = await axiosApi.get('photos?cameramen=' + arg);
 
 	return response.data;
+});
+
+export const PostPhoto = createAsyncThunk<void, PhotoMutation>('gallery/Post', async (arg) => {
+	await axiosApi.post('photos', arg);
 });
 
 export const DeleteOne = createAsyncThunk<void, string>('gallery/delete', async (arg) => {

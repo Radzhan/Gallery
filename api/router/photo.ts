@@ -2,6 +2,7 @@ import * as express from "express";
 import mongoose from "mongoose";
 import {imagesUpload} from "../multer";
 import auth from "../middleware/auth";
+import { promises as fs } from "fs";
 import Photo from '../model/Photo';
 
 const PhotoRouter = express.Router();
@@ -26,19 +27,21 @@ PhotoRouter.get("/", async (req, res, next) => {
 
 PhotoRouter.post("/", auth, imagesUpload.single("image"), async (req, res, next) => {
 	try {
-		const ingredientData = {
+		const PhotoData = await Photo.create({
 			author: req.body.author,
 			user: req.body.user,
 			title: req.body.title,
 			image: req.file ? req.file.filename : null,
-		};
+		});
 
-		await Photo.create(ingredientData);
-
-		return res.send(ingredientData);
+		return res.send(PhotoData);
 	} catch (e) {
+		if (req.file) {
+			await fs.unlink(req.file.path);
+		}
+
 		if (e instanceof mongoose.Error.ValidationError) {
-			return res.sendStatus(400).send(e);
+			return res.status(400).send(e);
 		} else {
 			return next(e);
 		}

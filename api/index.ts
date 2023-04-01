@@ -9,20 +9,20 @@ const app = express();
 const port = 8000;
 
 app.use(cors());
+app.use(express.static('public'));
 app.use(express.json());
 app.use("/users", userRouter);
 app.use("/photos", PhotoRouter);
 
 const run = async () => {
-	mongoose.set("strictQuery", false);
-	app.use(express.static("public"));
+	mongoose.set('strictQuery', false);
 	await mongoose.connect(config.db);
 
 	app.listen(port, () => {
-		console.log("we are live on " + port);
+		console.log('We are live on ' + port);
 	});
 
-	process.on("exit", () => {
+	process.on('exit', () => {
 		mongoose.disconnect();
 	});
 };

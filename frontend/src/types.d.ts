@@ -49,3 +49,10 @@ export interface Photo {
 	image: string;
 	author: string;
 }
+
+export interface PhotoMutation {
+	user: string;
+	title: string;
+	image: string;
+	author: string;
+}

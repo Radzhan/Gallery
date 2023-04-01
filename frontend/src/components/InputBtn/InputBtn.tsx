@@ -34,6 +34,7 @@ const InputBtn: React.FC<Props> = ({onChange, name, label}) => {
 				style={{display: "none"}}
 				type="file"
 				name={name}
+				required
 				onChange={onFileChange}
 				ref={inputRef}
 			/>
