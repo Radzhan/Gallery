@@ -6,6 +6,7 @@ import Register from './features/user/Register';
 import {useAppSelector} from './app/hooks';
 import {selectUser} from './features/user/userSlice';
 import Navbar from './features/Navbar/Navbar';
+import Main from './contaiers/Main/Main';
 
 const App = () => {
   const user = useAppSelector(selectUser);
@@ -17,9 +18,7 @@ const App = () => {
       <Routes>
 
         <Route path="/" element={
-          <ProtectedRoute isAllowed={!!user}>
-            <Main/>
-          </ProtectedRoute>
+          <Main/>
         }/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register/>}/>
