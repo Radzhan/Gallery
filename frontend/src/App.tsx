@@ -2,7 +2,10 @@ import React from 'react';
 import {Route, Routes} from 'react-router-dom';
 import './App.css';
 import Login from './features/user/Login';
-import Register from './features/user/Registr';
+import Register from './features/user/Register';
+import {useAppSelector} from './app/hooks';
+import {selectUser} from './features/user/userSlice';
+import Navbar from './features/Navbar/Navbar';
 
 const App = () => {
   const user = useAppSelector(selectUser);
