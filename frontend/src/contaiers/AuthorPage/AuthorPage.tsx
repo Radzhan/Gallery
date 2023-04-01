@@ -3,11 +3,15 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import { AuthorPhoto} from '../../store/GallerySlice';
 import { getAllPhotoAuthor} from '../../store/GalleryThunks';
 import CardPhoto from '../../components/CardPhoto/CardPhoto';
-import {useParams} from 'react-router-dom';
+import {useNavigate, useParams} from 'react-router-dom';
+import {Button} from '@mui/material';
+import {selectUser} from '../../features/user/userSlice';
 
 const AuthorPage = () => {
 	const {author} = useParams();
 	const {id} = useParams();
+	const navigate = useNavigate();
+	const user = useAppSelector(selectUser);
 	const arrayWithPhoto = useAppSelector(AuthorPhoto);
 	const dispatch = useAppDispatch();
 
@@ -24,9 +28,10 @@ const AuthorPage = () => {
 	});
 
 	return <div>
+		{ id === user?._id ? <Button size="small" onClick={() => navigate('/addNew/' + id)}>Add New</Button> : null}
 		<h2>{author}</h2>
 		{ arrayWithPhoto.length !== 0 ? createCard : <h2>Sorry no photo !</h2>}
 	</div>;
 };
 
-export default AuthorPage;``
+export default AuthorPage;

@@ -40,7 +40,6 @@ const CardPhoto: React.FC<Props> = ({currentId, author, title, image, user_id}) 
 	}
 
 	return <div>
-		{ id === user?._id ? <Button size="small" onClick={() => navigate('/addNew')}>Add New</Button> : null}
 		<Card sx={{maxWidth: 345, my: 3}}>
 			<CardMedia
 				onClick={handleOpen}
