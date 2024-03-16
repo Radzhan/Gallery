@@ -45,7 +45,7 @@ const AddNew = () => {
 	};
 
 	return (
-		<div>
+		<div >
 			<form onSubmit={submitFormHandler}>
 				<TextField id="outlined-basic" label="Title" variant="outlined"
 				           name="title"

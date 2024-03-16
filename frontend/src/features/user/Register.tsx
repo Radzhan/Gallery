@@ -16,7 +16,6 @@ import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { selectRegisterError } from "./userSlice";
 import {googleLogin, register} from "./userThunks";
 import {GoogleLogin} from "@react-oauth/google";
-import InputBtn from "../../components/InputBtn/InputBtn";
 
 const Register = () => {
 	const dispatch = useAppDispatch();
@@ -131,13 +130,6 @@ const Register = () => {
 								onChange={inputChangeHandler}
 								error={Boolean(getFieldError("password"))}
 								helperText={getFieldError("password")}
-							/>
-						</Grid>
-						<Grid item xs>
-							<InputBtn
-								label="Avatar"
-								onChange={fileInputChangeHandler}
-								name="avatar"
 							/>
 						</Grid>
 					</Grid>
